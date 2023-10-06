@@ -16,6 +16,8 @@ This is frontend starter project for nodejs-aws mentoring program. It uses the f
 - [Prettier](https://prettier.io/) as a code formatting tool
 - [TypeScript](https://www.typescriptlang.org/) as a type checking tool
 
+# [Demo](https://d54rufw0f0am5.cloudfront.net/)
+
 ## Available Scripts
 
 ### `start`
@@ -37,6 +39,10 @@ Runs tests in console, in browser or with coverage.
 ### `lint`, `prettier`
 
 Runs linting and formatting for all files in `src` folder.
+
+### `client:build:deploy:stage`
+
+Building and deploying project to s3/cloudfront using invalidation  
 
 ### `client:deploy`, `client:deploy:nc`
 

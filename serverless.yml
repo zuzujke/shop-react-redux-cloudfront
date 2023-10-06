@@ -1,4 +1,6 @@
-service: my-store-app
+org: kosxsem
+app: eshop-app
+service: eshop-app-service
 
 frameworkVersion: "3"
 
@@ -19,8 +21,10 @@ plugins:
 
 custom:
   client:
-    bucketName: my-store-app
+    bucketName: eshop-app-fe
     distributionFolder: dist
+    indexDocument: index.html
+    errorDocument: custom-error.html
   s3BucketName: ${self:custom.client.bucketName}
 
   ## Serverless-single-page-app-plugin configuration:

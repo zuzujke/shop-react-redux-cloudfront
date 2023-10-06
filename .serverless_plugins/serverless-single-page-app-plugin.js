@@ -52,7 +52,7 @@ class ServerlessPlugin {
 
   // syncs the `app` directory to the provided bucket
   syncDirectory() {
-    const s3Bucket = this.serverless.variables.service.custom.s3Bucket;
+    const s3Bucket = this.serverless.variables.service.custom.s3BucketName;
     const buildFolder =
       this.serverless.variables.service.custom.client.distributionFolder;
     const args = [
@@ -84,7 +84,7 @@ class ServerlessPlugin {
 
     const outputs = result.Stacks[0].Outputs;
     const output = outputs.find(
-      (entry) => entry.OutputKey === "WebAppCloudFrontDistributionOutput"
+      (entry) => entry.OutputKey === "ServerlessDeploymentBucketName"
     );
 
     if (output && output.OutputValue) {
@@ -100,7 +100,7 @@ class ServerlessPlugin {
   async invalidateCache() {
     const provider = this.serverless.getProvider("aws");
 
-    const domain = await this.domainInfo();
+    const cloudfrontDomain = 'd54rufw0f0am5.cloudfront.net';
 
     const result = await provider.request(
       "CloudFront",
@@ -112,7 +112,7 @@ class ServerlessPlugin {
 
     const distributions = result.DistributionList.Items;
     const distribution = distributions.find(
-      (entry) => entry.DomainName === domain
+      (entry) => entry.DomainName === cloudfrontDomain
     );
 
     if (distribution) {
@@ -134,7 +134,7 @@ class ServerlessPlugin {
         throw new Error("Failed invalidating CloudFront cache");
       }
     } else {
-      const message = `Could not find distribution with domain ${domain}`;
+      const message = `Could not find distribution with domain ${cloudfrontDomain}`;
       const error = new Error(message);
       this.serverless.cli.log(message);
       throw error;
