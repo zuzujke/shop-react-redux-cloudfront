@@ -40,16 +40,17 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       const formData = new FormData();
       formData.append("file", file);
 
-      const result = await axios({
-        method: "PUT",
-        url: response.data,
-        data: formData,
+      const result = await axios.put(response.data, file, {
+        headers: {
+          "Content-Type": "text/csv",
+        },
       });
 
       console.log("Result: ", result);
       setFile(null);
     }
   };
+
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
